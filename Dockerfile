@@ -1,6 +1,8 @@
 # Build stage
 FROM node:lts-alpine AS build
 WORKDIR /build
+RUN apk add --update --no-cache openssl1.1-compat
+ENV NODE_OPTIONS=--openssl-legacy-provider
 
 # Install modules with dev dependencies
 COPY package.json yarn.lock /build/
@@ -26,7 +28,7 @@ COPY --from=build /build/yarn.lock /build/package.json ./
 COPY --from=build /build/public ./public
 COPY --from=build /build/prisma ./prisma
 COPY --from=build /build/.next ./.next
-
+EXPOSE 5432
 # Start script
 USER node
 EXPOSE 3000
