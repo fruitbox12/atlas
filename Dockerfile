@@ -4,7 +4,7 @@ WORKDIR /build
 
 # Install modules with dev dependencies
 COPY package.json yarn.lock /build/
-RUN yarn install --froezn-lockfile
+RUN yarn install --frozen-lockfile
 
 # Build
 COPY . /build
